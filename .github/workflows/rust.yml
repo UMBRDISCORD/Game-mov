@@ -1,0 +1,68 @@
+name: Rustif keyboard_check(vk_right) 
+{
+x+=vel
+image_xscale=+size
+}
+
+
+if keyboard_check(vk_up) 
+{
+y-=vel
+image_xscale=-size
+}
+
+if keyboard_check(vk_down) 
+{
+y+=vel
+image_xscale=+size
+}
+
+
+if keyboard_check_pressed(vk_space)
+{
+	if sprite_index=spr_personagem
+	{
+   sprite_index=Spr_personagem_dragao
+	}
+	else
+	{
+		sprite_index=spr_personagem
+	}
+}
+
+
+if keyboard_check(ord("A"))
+{
+	aum=0.01
+	size+=aum
+    image_xscale=size
+	image_yscale=size
+}
+
+if keyboard_check(ord("O"))
+{
+	aum=0.01
+	size-=aum
+    image_xscale=size
+	image_yscale=size
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: cargo build --verbose
+    - name: Run tests
+      run: cargo test --verbose
